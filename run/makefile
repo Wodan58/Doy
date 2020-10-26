@@ -1,6 +1,6 @@
 #
 #   module  : makefile
-#   version : 1.1
+#   version : 1.2
 #   date    : 10/26/20
 #
 #	Makefile voor various versions of Joy.
@@ -19,7 +19,7 @@
 #	6. Add a description of the builtin to prims.c
 #
 CC = gcc -o$@
-CFLAGS = -DNDEBUG -I.. -Os -Wall -Wextra -Werror
+CFLAGS = -DNDEBUG -I.. -Os -Wall -Wextra
 
 ARFLAGS = rv -U
 
