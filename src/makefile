@@ -1,6 +1,6 @@
 #
 #   module  : makefile
-#   version : 1.1
+#   version : 1.2
 #   date    : 10/26/20
 #
 #	Makefile voor various versions of Joy.
@@ -22,7 +22,7 @@ ASM = nasm
 AFLAGS = -o$@ -felf64 -l$*.lst
 
 CC = gcc -o$@
-CFLAGS = -DNDEBUG -I.. -Os -Wall -Wextra -Werror
+CFLAGS = -DNDEBUG -I.. -Os -Wall -Wextra
 
 ARFLAGS = rv -U
 
