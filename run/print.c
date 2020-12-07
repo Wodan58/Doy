@@ -1,7 +1,7 @@
 /*
     module  : print.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 
 	void newline(FILE *fp)
 	void nl(void)
@@ -135,10 +135,12 @@ static void printstr(char *str, FILE *fp)
     outlinelength += 2;
 }
 
+char *ftoa(double x, char *str, int prec, int format, int chop);
+
 void printfactor(data_t *cur, FILE *fp)
 {
     int i, j;
-    char str[MAXSTR];
+    char str[MAXBUF];
 
     if (!cur)
 	return;
@@ -192,7 +194,7 @@ void printfactor(data_t *cur, FILE *fp)
 	break;
 
     case typ_float :
-	sprintf(str, "%f", cur->dbl);
+        ftoa(cur->dbl, str, 0, 'f', 0);
 	putstr(str, fp);
 	break;
 

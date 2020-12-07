@@ -1,7 +1,7 @@
 /*
     module  : is_char.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 */
 #include <stdio.h>
 #include "data.h"
@@ -12,7 +12,7 @@
 The type of characters. Literals are written with a single quote.
 Examples:  'A  '7  ';  and so on. Unix style escapes are allowed.
 */
-void is_char(int num)
+void is_char(long num)
 {
     data_t *cur;
 

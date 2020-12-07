@@ -1,7 +1,7 @@
 /*
     module  : compile.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 
 	void compileterm(int n)
 	void initcompile(void)
@@ -254,6 +254,7 @@ static void compilefactor(int n, int p)
 	case typ_list    :
 	    printf("\t%s\tis_%s\n", next ? "call" : "jmp", ptyp->name);
 	    printf("\tsection .data\n");
+	    printf("\talign\t16\n");
 	    compiletermlevel(pmem->val);
 	    printf("\tsection .text\n");
 	    break;
@@ -382,6 +383,7 @@ void compilelib()
     printf("L0\tret\n");
     printf("\tglobal\tend_text\nend_text:\n");
     printf("\tsection .data\n");
+    printf("\talign\t16\n");
     do
 	for (found = FALSE, i = 1; (psym = sym_getsym(i)) != 0; i++)
 	    if (psym->used == 1 && psym->value) {

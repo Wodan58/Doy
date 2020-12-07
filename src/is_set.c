@@ -1,7 +1,7 @@
 /*
     module  : is_set.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 */
 #include <stdio.h>
 #include "data.h"
@@ -14,7 +14,7 @@ The maximum is platform dependent, typically the range is 0..31.
 Literals are written inside curly braces.
 Examples:  {}  {0}  {1 3 5}  {19 18 17}.
 */
-void is_set(int num)
+void is_set(long num)
 {
     data_t *cur;
 

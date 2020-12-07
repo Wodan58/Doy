@@ -1,7 +1,7 @@
 /*
     module  : error.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 
 	void Warning(int num, char *str)
 	void Error(int num)
@@ -67,5 +67,7 @@ void ExecError(int num, char *op)
 {
     fflush(stdout);
     fprintf(stderr, "\nrun time error: %s needed for %s\n", messg[num], op);
+#if 0
     exit(1);
+#endif
 }

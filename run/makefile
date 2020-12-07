@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.2
-#   date    : 10/26/20
+#   version : 1.3
+#   date    : 11/23/20
 #
 #	Makefile voor various versions of Joy.
 #
@@ -31,4 +31,7 @@ RUNLIB : $(DO)(array.o) $(DO)(code.o) $(DO)(compile.o) $(DO)(convert2.o) \
 	 $(DO)(interp.o) $(DO)(kons.o) $(DO)(listing.o) $(DO)(local.o) \
 	 $(DO)(memory.o) $(DO)(nodes.o) $(DO)(print.o) $(DO)(readlib.o) \
 	 $(DO)(set32.o) $(DO)(stack.o) $(DO)(stats.o) $(DO)(strings.o) \
-	 $(DO)(token.o) $(DO)(value.o) $(DO)(writestr.o)
+	 $(DO)(token.o) $(DO)(value.o) $(DO)(writestr.o) $(DO)(ftoa.o)
+
+clean:
+	rm -f *.a

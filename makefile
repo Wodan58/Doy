@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.2
-#   date    : 10/26/20
+#   version : 1.3
+#   date    : 11/23/20
 #
 #	Makefile voor various versions of Joy.
 #
@@ -36,13 +36,16 @@ TOKENS  = token2.o lookup1.o symbol.o factor.o data2.o
 COMPILE = spasm.o lookup2.o symbol2.o factor2.o data2.o
 DUPLO	= duplo.o fib.o lookup.o factor.o data.o
 
-dummy : RUNLIB DOLIB joy0 joy1
+dummy : RUNLIB DOLIB joy0 joy1 JOYLIB
 
 DOLIB :
 	$(MAKE) -C src
 
 RUNLIB :
 	$(MAKE) -C run
+
+JOYLIB :
+	$(MAKE) -C lib
 
 joy0: tutorial
 	./tutorial <input.txt
@@ -76,3 +79,6 @@ joy1: duplo
 
 clean:
 	rm -f *.o *.s *.lst *.out tutorial joy token spasm duplo
+	$(MAKE) -C src clean
+	$(MAKE) -C run clean
+	$(MAKE) -C lib clean

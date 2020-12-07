@@ -1,7 +1,7 @@
 /*
     module  : aux_eql.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 */
 #include <stdio.h>
 #include <string.h>
@@ -57,16 +57,17 @@ static int eql1(data_t *node, data_t *temp, int type)
 	switch (temp->op) {
 	case typ_string :
 	case typ_symbol :
-	    if ((i = node->num) < userindex)
+	    if ((i = node->num) >= 0 && i < userindex)
 		str = joy_table[i].name;
 	    else
 		str = node->str;
-	    if ((i = temp->num) < userindex)
+	    if ((i = temp->num) >= 0 && i < userindex)
 		ptr = joy_table[i].name;
 	    else
 		ptr = temp->str;
 	    if (!type || node->op == temp->op)
-		num = strcmp(str, ptr) == 0;
+		if (str && ptr)
+		    num = strcmp(str, ptr) == 0;
 	    break;
 	}
 	break;

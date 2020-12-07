@@ -1,7 +1,7 @@
 /*
     module  : is_integer.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 */
 #include <stdio.h>
 #include "data.h"
@@ -12,7 +12,7 @@
 The type of negative, zero or positive integers.
 Literals are written in decimal notation. Examples:  -123   0   42.
 */
-void is_integer(int num)
+void is_integer(long num)
 {
     data_t *cur;
 

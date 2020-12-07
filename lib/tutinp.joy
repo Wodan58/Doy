@@ -1,0 +1,12 @@
+#
+#   module  : tutinp.joy
+#   version : 1.2
+#   date    : 05/06/19
+#
+(* FILE:  tutinp.joy *)
+
+%INCLUDE "usrlib.joy"
+%INCLUDE "joytut.joy"
+
+1 setecho
+joytut quit.

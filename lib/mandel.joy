@@ -1,0 +1,6 @@
+
+%INCLUDE "fraclib.joy"
+
+0 __settracegc.
+
+mandel pop.

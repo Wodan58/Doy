@@ -1,7 +1,7 @@
 /*
     module  : input.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.4
+    date    : 11/23/20
 
 	void inp_init(void)
 	void inp_exit(void)
@@ -30,10 +30,10 @@ typedef struct files_t {
 
 int ch = 0, echoflag = 0, outlinelength = 0;
 
-static int unget = 0, get_from_stdin = 0;
+static int unget = 0;
 
 static files_t inputs[MAXINP];
-static FILE *fp = 0;
+static FILE *yyin = 0;
 static int line = 0, level = 0;
 
 static char linebuf[MAXSTR];
@@ -42,7 +42,8 @@ static int leng = 0, cc = 0;
 void inp_init()
 {
     stk_init();
-    inputs[0].file = fp = stdin;
+    inputs[0].file = yyin = stdin;
+    inputs[0].name = strdup("stdin");
     inputs[0].line = line = 1;
 }
 
@@ -56,7 +57,7 @@ void inp_exit()
 }
 
 /*
-    Op inputs[0] wordt stdin en de regel van stdin opgeslagen.
+    At inputs[0] stdin and the line number of stdin are stored.
 */
 void point()
 {
@@ -97,20 +98,22 @@ void echonewline()
 */
 void firstfile(char *str)
 {
-    inputs[0].file = fp = freopen(str, "r", stdin);
-    inputs[0].name = strdup(str);
-    if (!fp)
+    inputs[0].file = yyin = freopen(str, "r", stdin);
+    if (!yyin)
 	Error(NOT_OPEN_FOR_READING);
+    inputs[0].name = strdup(str);
 }
 
 void redirect(FILE *fp)
 {
-    if (inputs[level].file != fp && !get_from_stdin) {
-	get_from_stdin = fp == stdin;
-	if (++level == MAXINP)
-	    ExpError(TOO_MANY_INCLUDE_FILES);
-	inputs[level].file = fp;
-    }
+    if (inputs[level].file == fp)
+	return;
+    inputs[level].line = line;
+    if (++level == MAXINP)
+	ExpError(TOO_MANY_INCLUDE_FILES);
+    inputs[level].file = yyin = fp;
+    inputs[level].name = 0;
+    inputs[level].line = line = 1;
 }
 
 void newfile(char *str)
@@ -119,13 +122,13 @@ void newfile(char *str)
     char *name, *buf = 0, *ptr;
 
     inputs[level].line = line;
-    if ((fp = fopen(str, "r")) == 0) {
+    if ((yyin = fopen(str, "r")) == 0) {
 	if ((name = inputs[level].name) != 0) {
 	    if ((ptr = strrchr(name, '/')) != 0) {
 		length = ptr - name;
 		if ((buf = malloc(length + strlen(str) + 2)) != 0) {
 		    sprintf(buf, "%.*s/%s", length, name, str);
-		    fp = fopen(buf, "r");
+		    yyin = fopen(buf, "r");
 		}
 	    }
 	}
@@ -134,13 +137,13 @@ void newfile(char *str)
 	buf = strdup(str);
     if (++level == MAXINP)
 	ExpError(TOO_MANY_INCLUDE_FILES);
-    inputs[level].file = fp;
+    inputs[level].file = yyin;
     inputs[level].line = line = 1;
     if (inputs[level].name)
 	free(inputs[level].name);
     inputs[level].name = buf;
     echonewline();
-    if (!fp)
+    if (!yyin)
 	Error(NOT_OPEN_FOR_READING);
 }
 
@@ -166,14 +169,13 @@ int getch()
 	return ch;
     }
 begin:
-    if ((ch = fgetc(fp)) == EOF) {
-	if (level) {
-	    fclose(fp);
-	    fp = inputs[--level].file;
-	    line = inputs[level].line;
-	    goto begin;
-	}
-	return ch;
+    if ((ch = fgetc(yyin)) == EOF) {
+	if (!level)
+	    return ch;
+	fclose(yyin);
+	yyin = inputs[--level].file;
+	line = inputs[level].line;
+	goto begin;
     }
     if (echoflag) {			/* echo */
 	if (!leng) {
@@ -190,7 +192,7 @@ begin:
 	    leng = 1;
     }
     if (ch == ESCAPE && !cc) {
-	while ((ch = fgetc(fp)) != EOF && ch != '\n')
+	while ((ch = fgetc(yyin)) != EOF && ch != '\n')
 	    if (cc < MAXSTR - 1)
 		linebuf[cc++] = ch;
 	linebuf[cc] = 0;

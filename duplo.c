@@ -1,9 +1,10 @@
 /*
     module  : duplo.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 11/23/20
 */
 #include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <time.h>
 #include "boole.h"
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     search_t *psym;
     int h = FALSE, d = FALSE, u = FALSE, p = FALSE, l = FALSE, i, j;
 
+    setbuf(stdout, 0);
     autoput = tracegc = TRUE;
     statistics = TRUE;
     for (i = 1; i < argc; i++) {
@@ -71,6 +73,13 @@ int main(int argc, char *argv[])
 		statistics = FALSE;
 		break;
 	    }
+    }
+    if (argv[i] && !isdigit(argv[i][0])) {
+	if (!freopen(argv[i], "r", stdin)) {
+	    fprintf(stderr, "failed to open the file '%s'.\n", argv[i]);
+	    exit(0);
+	}
+	i++;
     }
     g_argc = argc - i + 1;
     g_argv = &argv[i - 1];
