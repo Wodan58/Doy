@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.4
-#   date    : 12/14/20
+#   version : 1.5
+#   date    : 02/22/21
 #
 #	Makefile voor various versions of Joy.
 #
@@ -85,3 +85,4 @@ clean:
 	$(MAKE) -C src clean
 	$(MAKE) -C run clean
 	$(MAKE) -C lib clean
+	$(MAKE) -C test clean
