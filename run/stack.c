@@ -1,7 +1,7 @@
 /*
     module  : stack.c
-    version : 1.1
-    date    : 10/26/20
+    version : 1.2
+    date    : 02/22/21
 */
 #include <stdlib.h>
 #include "stack.h"
@@ -9,48 +9,51 @@
 #define MAX_STACK	1000000		// 8 MB
 #define MAGIC_VAL	0xCAFEDADADEADBEEF
 
-static long stack_bottom;	// cold end of the stack, in high memory
+static unsigned long *stack_top;	// hot end of the stack, in low memory
 
 /*
     A large portion of the stack is filled with a magic unsigned value.
 */
-static void color_stack(int block)
+static void stk_color(int block)
 {
     int i;
-    unsigned long *ptr = alloca(block * sizeof(char *));
 
+    stack_top = alloca(block * sizeof(void *));
     for (i = block - 1; i > 0; i--)
-	ptr[i] = MAGIC_VAL;
+	stack_top[i] = MAGIC_VAL;
 }
 
 /*
-    The address of the first unsigned without the magic value is reported.
+    The portion of the stack that has been used is reported.
 */
-static long check_stack(int block)
+static int stk_used(int block)
 {
     int i;
-    unsigned long *ptr = alloca(block * sizeof(char *));
 
+    stack_top = alloca(block * sizeof(void *));
     for (i = 0; i < block; i++)
-	if (ptr[i] == MAGIC_VAL)
+	if (stack_top[i] == MAGIC_VAL)
 	    break;
     for (; i < block; i++)
-	if (ptr[i] != MAGIC_VAL)
+	if (stack_top[i] != MAGIC_VAL)
 	    break;
-    return (long)&ptr[i];
+    return block - i;
 }
 
+/*
+    Initialize the hardware stack.
+*/
 void stk_init()
 {
-    char dummy;
-
-    stack_bottom = (long)&dummy;
-    color_stack(MAX_STACK);
+    stk_color(MAX_STACK);
 }
 
+/*
+    Report size and used of the hardware stack.
+*/
 void srep(long *size, long *prev, long *used)
 {
-    *size = MAX_STACK * sizeof(char *);
-    *prev = (long)stack_bottom;
-    *used = (stack_bottom - check_stack(MAX_STACK)) * sizeof(char *);
+    *size = MAX_STACK * sizeof(void *);
+    *prev = 0;
+    *used = stk_used(MAX_STACK) * sizeof(void *);
 }

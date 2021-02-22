@@ -1,7 +1,7 @@
 /*
     module  : do_fgets.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <string.h>
@@ -18,8 +18,8 @@ L is the next available line (as a string) from stream S.
 void do_fgets()
 {
     int i;
-    char *str;
     data_t *cur;
+    char *str, *ptr;
 
     DEBUG(__FUNCTION__);
     assert(stack && stack->op == typ_file && stack->fp);
@@ -28,7 +28,9 @@ void do_fgets()
     while (fgets(str + i, MAXSTR, stack->fp)) {
 	if ((i = strlen(str)) > 0 && str[i - 1] == '\n')
 	    break;
-	str = realloc(str, i + MAXSTR);
+	if ((ptr = realloc(str, i + MAXSTR)) == 0)
+	    break;
+	str = ptr;
     }
     cur = get(1);
     cur->op = typ_string;

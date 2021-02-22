@@ -1,7 +1,7 @@
 /*
     module  : value.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 
 	int value(void)
 	void directive(void)
@@ -94,11 +94,13 @@ int value()
 	break;
 
     case '?' :
-	scanf("%d", &rv);
+	if (!scanf("%d", &rv))
+	    rv = 0;
 	break;
 
     default :
 	ExpError(ILLEGAL_START_OF_SCAN_EXPR);
+	break;
     }
 einde:
     return rv;

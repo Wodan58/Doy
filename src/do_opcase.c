@@ -1,7 +1,7 @@
 /*
     module  : do_opcase.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <assert.h>
@@ -25,7 +25,7 @@ void do_opcase()
     temp = stack->list;
     if ((op = node->op) == typ_symbol)
 	for ( ; temp->next && temp->op == typ_list &&
-		!eql(temp, node); temp = temp->next)
+		!eql(node, temp); temp = temp->next)
 	    ;
     else
 	for ( ; temp->next && temp->op == typ_list &&

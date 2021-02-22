@@ -1,7 +1,7 @@
 /*
     module  : compile.c
-    version : 1.3
-    date    : 11/23/20
+    version : 1.4
+    date    : 02/22/21
 
 	void compileterm(int n)
 	void initcompile(void)
@@ -245,11 +245,13 @@ static void compilefactor(int n, int p)
 	default :
 	    break;
 	}
-	if ((ptyp = get_typname(pmem->op)) != 0)
-	    if (!ptyp->print) {
-		ptyp->print = 1;
-		printf("\textern\tis_%s\n", ptyp->name);
-	    }
+	ptyp = get_typname(pmem->op);
+	if (ptyp && !ptyp->print) {
+	    ptyp->print = 1;
+	    printf("\textern\tis_%s\n", ptyp->name);
+	}
+	if (!ptyp)
+	    ptyp = typname;
 	switch (pmem->op) {
 	case typ_list    :
 	    printf("\t%s\tis_%s\n", next ? "call" : "jmp", ptyp->name);
@@ -259,14 +261,11 @@ static void compilefactor(int n, int p)
 	    printf("\tsection .text\n");
 	    break;
 
-	case typ_string  :
-	    printf("\t%s\tis_%s\n", next ? "call" : "jmp", ptyp->name);
-	    break;
-
 	case typ_logical :
-	case typ_set     :
 	case typ_char    :
 	case typ_integer :
+	case typ_set     :
+	case typ_string  :
 	case typ_float   :
 	case typ_file    :
 	    printf("\t%s\tis_%s\n", next ? "call" : "jmp", ptyp->name);
@@ -414,7 +413,7 @@ void compilelib()
     for (i = 0; (psym = sym_getsym(i)) != 0; i++) {
 	if (psym->name[0] == '.' && psym->name[1])
 	    continue;
-	if (psym->used && psym->name) {
+	if (psym->used) {
 	    printf("S%d\tdb\t", i);
 	    writestr(psym->name);
 	}

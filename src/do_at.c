@@ -1,7 +1,7 @@
 /*
     module  : do_at.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <string.h>
@@ -49,6 +49,8 @@ void do_at()
 	for (node = stack->list; node && num-- > 0; node = node->next)
 	    ;
 	assert(node && num == -1);
+	if (!node)
+	    return;
 	cur->op = node->op;
 	cur->val = node->val;
 	break;

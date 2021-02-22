@@ -1,7 +1,7 @@
 /*
     module  : do_swons.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <string.h>
@@ -72,7 +72,7 @@ void do_swons()
     default :
 	assert(stack->next->op == typ_set || stack->next->op == typ_string ||
 	       stack->next->op == typ_list);
-	break;
+	return;
     }
     cur->next = stack->next;
     stack = cur;

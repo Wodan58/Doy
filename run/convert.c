@@ -1,7 +1,7 @@
 /*
     module  : convert.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 
     Conversion from data_t to memory_t and vice versa.
 */
@@ -42,7 +42,7 @@ static memrange FactorToMemory(data_t *cur)
 	return 0;
     i = kons(cur->op, cur->val, 0);
     if (cur->op == typ_list) {
-	j = TermToMemory(cur->list);
+	j = TermToMemory(cur);
 	node = mem_get(i);
 	node->val = j;
     }
@@ -54,7 +54,7 @@ static memrange TermToMemory(data_t *cur)
     memory_t *node;
     memrange i, j, k;
 
-    if (!cur)
+    if (!cur || (cur = cur->list) == 0)
 	return 0;
     i = k = FactorToMemory(cur);
     while (cur) {
@@ -70,7 +70,7 @@ memrange ReadTerm()
 {
     stack = 0;
     readterm();
-    return TermToMemory(stack->list);
+    return TermToMemory(stack);
 }
 
 memrange ReadFactor()

@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.2
-#   date    : 12/07/20
+#   version : 1.3
+#   date    : 02/22/21
 #
 #	Makefile voor various versions of Joy.
 #
@@ -31,6 +31,7 @@ LD = gcc -o$@
 LFLAGS = -L../run -lrun -L../src -ldo -lm
 
 DUPLO = ../duplo.o ../lookup.o ../factor.o ../data.o
+MYLIB = ../rand.o ../srand.o
 
 dummy: gcd1 modtst1 test1 tutinp1 alljoy1 jp-reprodtst1 mtrtst1 jp-church1 flatjoy1 reptst1 symtst1 jp-joytst1 plgtst1 laztst1 jp-nestrec1 grmtst1 lsptst1 # mandel1
 
@@ -52,8 +53,8 @@ test: test.o $(DUPLO)
 test1: test
 	-./test | diff -w - OUT/test.out
 
-tutinp: tutinp.o $(DUPLO)
-	-$(LD) tutinp.o $(DUPLO) $(LFLAGS)
+tutinp: tutinp.o $(DUPLO) $(MYLIB)
+	-$(LD) tutinp.o $(DUPLO) $(MYLIB) $(LFLAGS)
 
 tutinp1: tutinp
 	-./tutinp tutinp.inp | diff -w - OUT/tutinp.out

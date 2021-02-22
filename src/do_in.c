@@ -1,7 +1,7 @@
 /*
     module  : do_in.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <string.h>
@@ -18,28 +18,28 @@ Tests whether X is a member of aggregate A.
 void do_in()
 {
     int i, j;
-    data_t *cur, *node, *temp;
+    data_t *cur, *temp, *node;
 
     DEBUG(__FUNCTION__);
     assert(stack && stack->next);
     cur = get(1);
     cur->op = typ_logical;
-    node = stack->next;
+    temp = stack->next;
     switch (stack->op) {
     case typ_set :
-	i = node->num;
+	i = temp->num;
 	j = stack->num;
 	cur->num = tst_bit(j, i) != 0;
 	break;
 
     case typ_string :
-	cur->num = strchr(stack->str, node->num) != 0;
+	cur->num = strchr(stack->str, temp->num) != 0;
 	break;
 
     case typ_list :
-	for (temp = stack->list; temp && !eql2(temp, node); temp = temp->next)
+	for (node = stack->list; node && !eql2(node, temp); node = node->next)
 	    ;
-	cur->num = temp != 0;
+	cur->num = node != 0;
 	break;
 
     default :
@@ -47,6 +47,6 @@ void do_in()
 	       stack->op == typ_list);
 	break;
     }
-    cur->next = node->next;
+    cur->next = temp->next;
     stack = cur;
 }

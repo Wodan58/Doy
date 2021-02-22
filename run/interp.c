@@ -1,7 +1,7 @@
 /*
     module  : interp.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <string.h>
@@ -242,8 +242,7 @@ void joy(memrange nod)
 	    break;
 
 	case getch_:	/* R.W. */
-	    getch();
-	    s = kons(typ_integer, ch, s);
+	    s = kons(typ_integer, getch(), s);
 	    break;
 
 	/* COMBINATORS: */

@@ -1,12 +1,14 @@
 /*
     module  : do_rand.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include "data.h"
 #include "ident.h"
+
+int my_rand(void);
 
 /*
 rand  :  ->  I
@@ -19,7 +21,7 @@ void do_rand()
     DEBUG(__FUNCTION__);
     cur = get(1);
     cur->op = typ_integer;
-    cur->num = rand();
+    cur->num = my_rand();
     cur->next = stack;
     stack = cur;
 }

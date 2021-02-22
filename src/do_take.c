@@ -1,7 +1,7 @@
 /*
     module  : do_take.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 */
 #include <stdio.h>
 #include <string.h>
@@ -60,7 +60,7 @@ void do_take()
     default :
 	assert(stack->op == typ_set || stack->op == typ_string ||
 	       stack->op == typ_list);
-	break;
+	return;
     }
     cur->next = stack->next;
     stack = cur;

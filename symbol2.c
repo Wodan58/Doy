@@ -1,7 +1,7 @@
 /*
     module  : symbol2.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 02/22/21
 
 	void sym_init(void)
 	void sym_exit(void)
@@ -72,7 +72,7 @@ static int sym_addsym(char *name, int nivo)
 		 table; the return value is an index in the symbol table.
 
     A symbol is searched after an identifier has been read.
-    An identifier can be everything, bu a number of characters are excepted:
+    An identifier can be anything, but a number of characters are excepted:
     ( ) . ; [ ] { }
     If one of the words MODULE, PRIVATE, PUBLIC, ==, END is found (or a
     synonym thereof) no further lookup is needed. These keywords cannot be
@@ -80,16 +80,16 @@ static int sym_addsym(char *name, int nivo)
 */
 int sym_lookup(char *name)
 {
-    char *str = 0;
     symbol_t *psym;
     search_t sch, *psch;
+    char *str = 0, *name_str = name;
     int g_idx = 0, l_idx = 0, value = 0, size;
 
     if (!*name)
 	goto store;
     if (module) {
 	size = strlen(module) + strlen(name) + 2;
-	str = malloc(size);
+	name_str = str = malloc(size);
 	sprintf(str, "%s.%s", module, name);
     }
 
@@ -119,7 +119,7 @@ int sym_lookup(char *name)
     for (l_idx = last_index(&locals); l_idx >= 0; l_idx--) {
 	psch = index_line(&locals, l_idx);
 	psym = sym_getsym(psch->value);
-	if (!strcmp(module ? str : name, psym->name)) {
+	if (!strcmp(name_str, psym->name)) {
 	    if (str)
 		free(str);
 	    return psch->value;
@@ -130,13 +130,14 @@ int sym_lookup(char *name)
     If the section is PRIVATE, the symbol is added to the local table.
 */
     if (section == def_private) {
-	if (value)
+	if (value) {
+	    if (str)
+		free(str);
 	    return value;
-	sch.name = strdup(module ? str : name);
+	}
+	sch.name = strdup(name_str);
 	sch.value = sym_addsym(sch.name, level);
 	add_line(&locals, -1, &sch);
-	if (str)
-	    free(str);
 /*
     It appears to be necessary to add local symbols to the search table;
     this means that they are visible to the global table.
@@ -145,7 +146,7 @@ int sym_lookup(char *name)
     }
 
 /*
-    If a module is activem the name is added to the module name and the search
+    If a module is active, the name is added to the module name and the search
     is restarted. A new search is not executed in case the name was already
     found.
 */
@@ -161,10 +162,7 @@ int sym_lookup(char *name)
     if (section == def_module) {
 	if (module)
 	    free(module);
-	module = strdup(module ? str : name);
-	if (str)
-	    free(str);
-	str = module;
+	name_str = module = strdup(name_str);
     } else if (module && (g_idx = search_line(&search, str)) > 0) {
 /*
     Search again the global symbol table in case str is filled thanks to
@@ -195,19 +193,22 @@ int sym_lookup(char *name)
 /*
     Module members are never added as a global symbol.
 */
-    if (strchr(name + 1, '.') && !module && !value)
+    if (strchr(name + 1, '.') && !module && !value) {
+	if (str)
+	    free(str);
 	return 0;
+    }
 
 /*
     If the name was not found, a new symbol table entry is added.
 */
 store:
-    sch.name = strdup(module ? str : name);
+    sch.name = strdup(name_str);
     sch.value = sym_addsym(sch.name, 0);
-    if (str && str != module)
-	free(str);
 
 einde:
+    if (str)
+	free(str);
     if (module)
 	g_idx = search_line(&search, sch.name);
     if (g_idx <= 0)
