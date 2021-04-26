@@ -1,11 +1,11 @@
 /*
     module  : strings.h
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 04/24/21
 */
-typedef struct string_t {
+typedef struct my_string_t {
     char *str;
-} string_t;
+} my_string_t;
 
 void str_init(void);
 void str_exit(void);

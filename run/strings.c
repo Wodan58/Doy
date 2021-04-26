@@ -1,7 +1,7 @@
 /*
     module  : strings.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 04/24/21
 
 	void str_init()
 	void str_exit()
@@ -22,7 +22,7 @@ static array_t strings;
 */
 void str_init()
 {
-    init_array(&strings, sizeof(string_t));
+    init_array(&strings, sizeof(my_string_t));
     str_add("");
 }
 
@@ -38,7 +38,7 @@ void str_exit()
 */
 char *str_get(int idx)
 {
-    string_t *pstr;
+    my_string_t *pstr;
 
     if ((pstr = index_line(&strings, idx)) == 0)
 	return 0;
@@ -50,7 +50,7 @@ char *str_get(int idx)
 */
 int str_add(char *str)
 {
-    string_t node;
+    my_string_t node;
 
     node.str = strdup(str);
     return add_line(&strings, -1, &node);

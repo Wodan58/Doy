@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.1
-#   date    : 12/14/20
+#   version : 1.2
+#   date    : 04/24/21
 #
 #	Makefile voor various versions of Joy.
 #
@@ -87,7 +87,7 @@ test13: test13.o $(DUPLO)
 	-./test13
 
 test14: test14.o $(DUPLO)
-	-$(LD) test14.o $(DUPLO) $(LFLAGS)
+	-$(LD) test14.o ../srand.o ../rand.o $(DUPLO) $(LFLAGS)
 	-./test14
 
 .s.o:
