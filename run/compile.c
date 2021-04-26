@@ -1,7 +1,7 @@
 /*
     module  : compile.c
-    version : 1.4
-    date    : 02/22/21
+    version : 1.5
+    date    : 04/26/21
 
 	void compileterm(int n)
 	void initcompile(void)
@@ -15,7 +15,7 @@
 #include "memory.h"
 #include "symbol.h"
 #include "boole.h"
-#include "strings.h"
+#include "string1.h"
 #include "writestr.h"
 #include "compile.h"
 

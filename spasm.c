@@ -1,7 +1,7 @@
 /*
     module  : spasm.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 04/26/21
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 #include "token.h"
 #include "compile.h"
 #include "cycle.h"
-#include "strings.h"
+#include "string1.h"
 #include "listing.h"
 #include "stats.h"
 #include "lookup.h"

@@ -1,5 +1,5 @@
 /*
-    module  : strings.h
+    module  : string1.h
     version : 1.3
     date    : 04/24/21
 */

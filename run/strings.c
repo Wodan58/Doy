@@ -1,7 +1,7 @@
 /*
     module  : strings.c
-    version : 1.3
-    date    : 04/24/21
+    version : 1.4
+    date    : 04/26/21
 
 	void str_init()
 	void str_exit()
@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "array.h"
-#include "strings.h"
+#include "string1.h"
 
 static array_t strings;
 
