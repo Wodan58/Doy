@@ -1,7 +1,7 @@
 /*
     module  : convert2.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 06/14/21
 
     Conversion from data_t to memory_t and vice versa.
 */
@@ -87,42 +87,56 @@ static void MemoryToTerm(memrange n)
 
 void WriteTerm(memrange n)
 {
+    int leng;
+
     if (!n)
 	return;
     stack = 0;
     MemoryToTerm(n);
+    leng = outlinelength;
     printterm(stack, stdout);
-    if (echoflag)
+    if (echoflag) {
+	outlinelength = leng;
 	printterm(stack, listing);
+    }
 }
 
 void WriteFactor(memrange n)
 {
+    int leng;
+
     if (!n)
 	return;
     stack = 0;
     MemoryToFactor(n);
+    leng = outlinelength;
     printfactor(stack, stdout);
-    if (echoflag)
+    if (echoflag) {
+	outlinelength = leng;
 	printfactor(stack, listing);
+    }
 }
 
 void WriteLine()
 {
-    newline(stdout);
     if (echoflag)
-	echonewline();
+	echonewline(outlinelength);
+    newline(stdout);
 }
 
 void WriteString(char *str)
 {
+    int leng;
     data_t cur;
 
     cur.op = typ_symbol;
     cur.str = str;
+    leng = outlinelength;
     printfactor(&cur, stdout);
-    if (echoflag)
+    if (echoflag) {
+	outlinelength = leng;
 	printfactor(&cur, listing);
+    }
 }
 
 void WriteChar(int ch)

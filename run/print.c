@@ -1,7 +1,7 @@
 /*
     module  : print.c
-    version : 1.3
-    date    : 11/23/20
+    version : 1.4
+    date    : 06/14/21
 
 	void newline(FILE *fp)
 	void nl(void)
@@ -45,7 +45,6 @@ void nl(void)
 
 void putch(int ch, FILE *fp)
 {
-    echonewline();
     if (ch == '\n' || (isspace(ch) && outlinelength >= MAX_LINE))
 	newline(fp);
     else {

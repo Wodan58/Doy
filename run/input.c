@@ -1,12 +1,12 @@
 /*
     module  : input.c
-    version : 1.4
-    date    : 11/23/20
+    version : 1.5
+    date    : 06/14/21
 
 	void inp_init(void)
 	void inp_exit(void)
 	void point(void)
-	void echonewline(void)
+	void echonewline(int mode)
 	void firstfile(char *str)
 	void newfile(char *str)
 	void echoline(void)
@@ -82,9 +82,9 @@ void point()
     fprintf(stderr, "^\n");
 }
 
-void echonewline()
+void echonewline(int mode)
 {
-    if (echoflag && leng) {
+    if (echoflag && (leng || mode)) {
 	fputc('\n', listing);
 	leng = 0;
     }
@@ -142,7 +142,7 @@ void newfile(char *str)
     if (inputs[level].name)
 	free(inputs[level].name);
     inputs[level].name = buf;
-    echonewline();
+    echonewline(0);
     if (!yyin)
 	Error(NOT_OPEN_FOR_READING);
 }
@@ -186,10 +186,7 @@ begin:
 	}
 	if (ch != ESCAPE || cc)
 	    fputc(ch, listing);
-	if (ch == '\n')
-	    leng = 0;
-	else
-	    leng = 1;
+	leng = 1;
     }
     if (ch == ESCAPE && !cc) {
 	while ((ch = fgetc(yyin)) != EOF && ch != '\n')

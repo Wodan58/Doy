@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.6
-#   date    : 04/26/21
+#   version : 1.7
+#   date    : 06/14/21
 #
 #	Makefile voor various versions of Joy.
 #
@@ -25,10 +25,11 @@ ASM = nasm
 AFLAGS = -o$@ -felf64 -l$*.lst
 
 CC = gcc -o$@
-CFLAGS = -DNDEBUG -Os -Wall -Wextra -Werror
+CFLAGS = -DNDEBUG -Os -Wall -Wextra
 
 LD = gcc -o$@
 LFLAGS = -Lrun -lrun -Lsrc -ldo
+LFLAGS1 = -Lrun -lrun
 
 OBJECT  = joy0.o lookup1.o symbol.o factor.o data2.o 
 RUNTIME = main.o tutorial.o lookup.o symbol.o factor.o data.o
@@ -57,7 +58,7 @@ tutorial: joy tutorial.s $(RUNTIME)
 	$(LD) $(RUNTIME) $(LFLAGS)
 
 joy: $(OBJECT) run/librun.a src/libdo.a
-	$(LD) $(OBJECT) $(LFLAGS)
+	$(LD) $(OBJECT) $(LFLAGS1)
 
 tutorial.s: tutorial.joy
 	./joy -c <$< >$@
