@@ -1,7 +1,7 @@
 /*
     module  : flex.c
-    version : 1.2
-    date    : 10/26/20
+    version : 1.3
+    date    : 07/09/22
 
 	void flex_init()
 	void flex_exit()
@@ -46,7 +46,7 @@ char *flex_get()
 }
 
 /*
-    flex_add - add a character to a string. The string is always extenden with
+    flex_add - add a character to a string. The string is always extended with
 	       an ending \0 byte.
 */
 void flex_add(int ch)

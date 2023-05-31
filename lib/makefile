@@ -33,7 +33,8 @@ LFLAGS = -L../run -lrun -L../src -ldo -lm
 DUPLO = ../duplo.o ../lookup.o ../factor.o ../data.o
 MYLIB = ../rand.o ../srand.o
 
-dummy: fib1 gcd1 modtst1 test1 tutinp1 alljoy1 jp-reprodtst1 mtrtst1 jp-church1 flatjoy1 reptst1 symtst1 jp-joytst1 plgtst1 laztst1 jp-nestrec1 grmtst1 lsptst1 # mandel1
+dummy: fib1
+# gcd1 modtst1 test1 tutinp1 alljoy1 jp-reprodtst1 mtrtst1 jp-church1 flatjoy1 reptst1 symtst1 jp-joytst1 plgtst1 laztst1 jp-nestrec1 grmtst1 lsptst1 # mandel1
 
 fib: fib.o $(DUPLO)
 	-$(LD) fib.o $(DUPLO) $(LFLAGS)

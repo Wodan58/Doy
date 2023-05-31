@@ -24,7 +24,7 @@ AFLAGS = -o$@ -felf64 -l$*.lst
 CC = gcc -o$@
 CFLAGS = -DNDEBUG -I.. -Os -Wall -Wextra
 
-ARFLAGS = rv -U
+ARFLAGS = rvU
 
 DO = libdo.a
 

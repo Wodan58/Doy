@@ -1,7 +1,7 @@
 #
-#   module  : makefile
-#   version : 1.7
-#   date    : 06/14/21
+#   module  : %M%
+#   version : %I%
+#   date    : %G%
 #
 #	Makefile voor various versions of Joy.
 #
@@ -18,8 +18,8 @@
 #	5. Add the name of the builtin to standardident_NAMES in dump.c
 #	6. Add a description of the builtin to prims.c
 #
-.PRECIOUS:
-.SUFFIXES: .joy
+.SUFFIXES:
+.SUFFIXES: .c .s .o
 
 ASM = nasm
 AFLAGS = -o$@ -felf64 -l$*.lst
@@ -28,58 +28,24 @@ CC = gcc -o$@
 CFLAGS = -DNDEBUG -Os -Wall -Wextra
 
 LD = gcc -o$@
-LFLAGS = -Lrun -lrun -Lsrc -ldo
-LFLAGS1 = -Lrun -lrun
+LFLAGS = -Lrun -lrun
 
-OBJECT  = joy0.o lookup1.o symbol.o factor.o data2.o 
-RUNTIME = main.o tutorial.o lookup.o symbol.o factor.o data.o
-TOKENS  = token2.o lookup1.o symbol.o factor.o data2.o
-COMPILE = spasm.o lookup2.o symbol2.o factor2.o data2.o
-DUPLO	= duplo.o fib.o lookup.o factor.o data.o
+OBJECT = joy0.o lookup1.o symbol.o factor.o data2.o 
 
-dummy: joy0 joy1 JOYLIB JOYTEST
+tut: joy
+	./joy 42minjoy.lib tutorial.joy
 
-src/libdo.a:
-	$(MAKE) -C src
+joy: $(OBJECT) run/librun.a src/libdo.a
+	$(LD) $(OBJECT) $(LFLAGS)
 
 run/librun.a:
 	$(MAKE) -C run
 
-JOYLIB:
-	$(MAKE) -C lib
-
-JOYTEST:
-	$(MAKE) -C test
-
-joy0: tutorial
-	./tutorial <input.txt
-
-tutorial: joy tutorial.s $(RUNTIME)
-	$(LD) $(RUNTIME) $(LFLAGS)
-
-joy: $(OBJECT) run/librun.a src/libdo.a
-	$(LD) $(OBJECT) $(LFLAGS1)
-
-tutorial.s: tutorial.joy
-	./joy -c <$< >$@
-
-token: $(TOKENS)
-	$(LD) $(TOKENS) $(LFLAGS)
-
-spasm: $(COMPILE)
-	$(LD) $(COMPILE) $(LFLAGS)
-
-duplo: spasm $(DUPLO)
-	$(LD) $(DUPLO) $(LFLAGS)
-
-joy1: duplo
-	./duplo
+src/libdo.a:
+	$(MAKE) -C src
 
 .s.o:
 	$(ASM) $(AFLAGS) $<
-
-.joy.s:
-	./spasm $< >$@
 
 clean:
 	rm -f *.o *.s *.lst *.out tutorial joy token spasm duplo

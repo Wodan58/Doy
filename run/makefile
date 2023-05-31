@@ -21,7 +21,7 @@
 CC = gcc -o$@
 CFLAGS = -DNDEBUG -I.. -Os -Wall -Wextra
 
-ARFLAGS = rv -U
+ARFLAGS = rvU
 
 DO = librun.a
 
