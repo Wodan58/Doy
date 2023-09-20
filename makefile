@@ -1,55 +1,33 @@
 #
-#   module  : %M%
-#   version : %I%
-#   date    : %G%
+#   module  : makefile
+#   version : 1.3
+#   date    : 09/20/23
 #
-#	Makefile voor various versions of Joy.
-#
-#	Joy is a translation of the Pascal sources, with a number of
-#	corrections, extended with getch and putch and hyphen not as a
-#	separate symbol.
-#
-#	Recipe for adding a new builtin:
-#
-#	1. Create a .c file with the code of the new builtin
-#	2. Add the .c file to the makefile
-#	3. Add the new builtin to standardindent in ident.h
-#	4. Add the new builtin to initialise in initsym.c
-#	5. Add the name of the builtin to standardident_NAMES in dump.c
-#	6. Add a description of the builtin to prims.c
-#
+.POSIX:
 .SUFFIXES:
-.SUFFIXES: .c .s .o
+.SUFFIXES: .c .o .joy
 
-ASM = nasm
-AFLAGS = -o$@ -felf64 -l$*.lst
+PROG   = fib
+CC     = gcc
+CFLAGS = -O3 -Wall -Wextra -Werror -Wno-unused-parameter
+HDRS   = globals.h
+OBJS   = $(PROG).o exeterm.o ersatz.o main.o exec.o writ.o prog.o save.o undo.o
 
-CC = gcc -o$@
-CFLAGS = -DNDEBUG -Os -Wall -Wextra
+$(PROG):	prep $(OBJS)
+	$(CC) -o$@ $(OBJS) -lm -lgc
 
-LD = gcc -o$@
-LFLAGS = -Lrun -lrun
+$(OBJS): $(HDRS)
 
-OBJECT = joy0.o lookup1.o symbol.o factor.o data2.o 
+prep:
+	sh defs.sh .
+	sh deps.sh .
+	sh prim.sh .
 
-tut: joy
-	./joy 42minjoy.lib tutorial.joy
+.c.o:
+	$(CC) -o$@ $(CFLAGS) -c $<
 
-joy: $(OBJECT) run/librun.a src/libdo.a
-	$(LD) $(OBJECT) $(LFLAGS)
-
-run/librun.a:
-	$(MAKE) -C run
-
-src/libdo.a:
-	$(MAKE) -C src
-
-.s.o:
-	$(ASM) $(AFLAGS) $<
+.joy.c:
+	./joy -c $<
 
 clean:
-	rm -f *.o *.s *.lst *.out tutorial joy token spasm duplo
-	$(MAKE) -C src clean
-	$(MAKE) -C run clean
-	$(MAKE) -C lib clean
-	$(MAKE) -C test clean
+	rm -f *.o defs.h deps.h prim.c prim.h

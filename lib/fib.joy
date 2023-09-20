@@ -1,3 +1,0 @@
-DEFINE fib == [small] [] [pred dup pred] [+] binrec.
-
-10 fib.

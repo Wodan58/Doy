@@ -1,3 +1,7 @@
-vergelijk.sh
-files
-t
+soy.tar
+defs.h
+deps.h
+*.o
+*.exe
+prim.c
+prim.h
