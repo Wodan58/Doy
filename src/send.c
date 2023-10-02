@@ -1,7 +1,7 @@
 /*
     module  : send.c
-    version : 1.3
-    date    : 09/15/23
+    version : 1.4
+    date    : 10/02/23
 */
 #ifndef SEND_C
 #define SEND_C
@@ -16,8 +16,8 @@ void send_(pEnv env)
     Node node, temp;
 
     PARM(2, SEND);
-    node = lst_pop(env->stck);		/* read the node from the stack */
-    temp = lst_back(env->stck);		/* send the node through the channel */
+    env->stck = pvec_pop(env->stck, &node); /* read the node from the stack */
+    temp = pvec_lst(env->stck);		/* send the node through the channel */
     send(env, temp.u.num, node);	/* use channel number */
 #endif
 }

@@ -1,7 +1,7 @@
 /*
     module  : recv.c
-    version : 1.3
-    date    : 09/15/23
+    version : 1.4
+    date    : 10/02/23
 */
 #ifndef RECV_C
 #define RECV_C
@@ -16,13 +16,11 @@ void recv_(pEnv env)
     Node temp, node;
 
     PARM(1, RECEIVE);
-    temp = lst_back(env->stck);		/* receive a node from the channel, */ 
+    temp = pvec_lst(env->stck);		/* receive a node from the channel, */ 
     if (receive(env, temp.u.num, &node))
-	lst_push(env->stck, node);	/* push it on the stack and continue */
+	env->stck = pvec_add(env->stck, node);	/* push it on the stack */
     else {
-	node.u.proc = recv_;		/* reschedule this instruction */
-	node.op = ANON_FUNCT_;
-	lst_push(env->prog, node);
+	code(env, recv_);		/* reschedule this instruction */
 	release(env);			/* switch to another task */
     }
 #endif

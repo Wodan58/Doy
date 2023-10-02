@@ -26,7 +26,7 @@ Advantages
 - Execution is always a bit faster than in the interpreter, even when exactly
   the same code is executed because the source code need not be read and also
   because the compiled code is more compact and cache friendly.
-- The source code is not visible. The user of the program only gets to see is
+- The source code is not visible. The user of the program only gets to see
   the behaviour of the program and if that is satisfactory then there is no
   need to expose the source code.
 - A programming language that comes with a compiler looks slightly more adult
@@ -35,7 +35,7 @@ Advantages
 Disadvantages
 -------------
 
-- A compiled program has limitied functionality compared with the interpreter.
+- A compiled program has limited functionality compared with the interpreter.
   It can do only one thing.
 - Binaries take up more hard disk space than the source files that the
   interpreter uses.

@@ -1,7 +1,7 @@
 /*
  *  module  : exeterm.c
- *  version : 1.3
- *  date    : 09/20/23
+ *  version : 1.4
+ *  date    : 10/02/23
  */
 #include "globals.h"
 
@@ -12,9 +12,9 @@ PUBLIC void exeterm(pEnv env, NodeList *list)
 {
     Node node;
 
-    lst_copy(env->prog, list);
-    while (lst_size(env->prog)) {
-	node = lst_pop(env->prog);
+    prog(env, list);
+    while (pvec_cnt(env->prog)) {
+	env->prog = pvec_pop(env->prog, &node);
 	switch (node.op) {
 	case USR_LIST_:
 	    prog(env, node.u.lis);
@@ -39,7 +39,7 @@ next:
 	case FILE_:
 	case BIGNUM_:
 	case USR_STRING_:
-	    lst_push(env->stck, node);
+	    env->stck = pvec_add(env->stck, node);
 	    break;
 	}
     }

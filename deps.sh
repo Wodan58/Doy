@@ -1,7 +1,7 @@
 #
-#   module  : %M%
-#   version : %I%
-#   date    : %G%
+#   module  : deps.sh
+#   version : 1.3
+#   date    : 09/19/23
 #
 #   Generate deps.h
 #   The directory needs to be given as parameter.

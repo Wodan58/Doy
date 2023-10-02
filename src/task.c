@@ -1,7 +1,7 @@
 /*
     module  : task.c
-    version : 1.3
-    date    : 09/15/23
+    version : 1.4
+    date    : 10/02/23
 */
 #ifndef TASK_C
 #define TASK_C
@@ -18,10 +18,10 @@ void task_(pEnv env)
 
     PARM(1, DIP);
     ptr = new_thread(env);		/* create a new thread, no switch */
-    lst_init(ptr->stck);		/* start with an empty stack */
-    lst_init(ptr->prog);		/* start with empty code */
-    node = lst_pop(env->stck);		/* read the code from the stack */
-    lst_copy(ptr->prog, node.u.lis);	/* copy the code to be executed */
+    ptr->stck = pvec_init();		/* start with an empty stack */
+    ptr->prog = pvec_init();		/* start with empty code */
+    env->stck = pvec_pop(env->stck, &node); /* read the code from the stack */
+    pvec_copy(env->prog, node.u.lis);	/* copy the code to be executed */
     renew_thread(env);			/* switch to the new thread */
 #endif
 }
