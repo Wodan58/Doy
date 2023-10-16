@@ -1,7 +1,7 @@
 #
 #   module  : CMakeLists.txt
-#   version : 1.1
-#   date    : 09/20/23
+#   version : 1.2
+#   date    : 10/16/23
 #
 cmake_minimum_required(VERSION 3.0)
 project(Roy VERSION 1.0)
@@ -13,7 +13,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   add_definitions(-DGC_NOT_DLL -D_CRT_SECURE_NO_WARNINGS)
 endif()
 add_definitions(-DJVERSION="${CMAKE_BUILD_TYPE} ${PROJECT_VERSION}")
-add_executable(fib fib.c exeterm.c ersatz.c main.c exec.c writ.c prog.c save.c undo.c)
+add_executable(fib fib.c exeterm.c ersatz.c main.c exec.c writ.c prog.c save.c)
 add_dependencies(fib always)
 add_custom_target(always
 		  COMMAND sh ${CMAKE_SOURCE_DIR}/prim.sh ${CMAKE_SOURCE_DIR}
