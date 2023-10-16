@@ -1,7 +1,7 @@
 /*
  *  module  : exeterm.c
- *  version : 1.4
- *  date    : 10/02/23
+ *  version : 1.5
+ *  date    : 10/12/23
  */
 #include "globals.h"
 
@@ -29,16 +29,7 @@ PUBLIC void exeterm(pEnv env, NodeList *list)
 	    node.op = ANON_FUNCT_;
 	    goto next;
 next:
-	case BOOLEAN_:
-	case CHAR_:
-	case INTEGER_:
-	case SET_:
-	case STRING_:
-	case LIST_:
-	case FLOAT_:
-	case FILE_:
-	case BIGNUM_:
-	case USR_STRING_:
+default:
 	    env->stck = pvec_add(env->stck, node);
 	    break;
 	}
