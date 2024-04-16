@@ -1,7 +1,7 @@
 #
 #   module  : makefile
-#   version : 1.5
-#   date    : 10/12/23
+#   version : 1.6
+#   date    : 04/16/24
 #
 .POSIX:
 .SUFFIXES:
@@ -11,7 +11,7 @@ PROG   = fib
 CC     = gcc
 CFLAGS = -O3 -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter
 HDRS   = globals.h
-OBJS   = $(PROG).o exeterm.o ersatz.o main.o exec.o writ.o prog.o save.o
+OBJS   = $(PROG).o exeterm.o ersatz.o main.o writ.o prog.o save.o
 
 $(PROG):	prep $(OBJS)
 	$(CC) -o$@ $(OBJS) -lm -lgc
