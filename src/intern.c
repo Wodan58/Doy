@@ -1,27 +1,28 @@
 /*
     module  : intern.c
-    version : 1.6
-    date    : 10/02/23
+    version : 1.10
+    date    : 04/11/24
 */
 #ifndef INTERN_C
 #define INTERN_C
 
 /**
-OK 2180  intern  :  DA	"sym"  ->  sym
+Q0  OK  2180  intern  :  DA  "sym"  ->  sym
 Pushes the item whose name is "sym".
 */
-PRIVATE void intern_(pEnv env)
+void intern_(pEnv env)
 {
     Node node;
+    int index;
     Entry ent;
 
     PARM(1, INTERN);
     env->stck = pvec_pop(env->stck, &node);
-    lookup(env, node.u.str);
-    ent = vec_at(env->symtab, env->location);
+    index = lookup(env, node.u.str);
+    ent = vec_at(env->symtab, index);
     if (ent.is_user) {
 	node.op = USR_;
-	node.u.ent = env->location;
+	node.u.ent = index;
     } else {
 	node.op = ANON_FUNCT_;
 	node.u.proc = ent.u.proc;

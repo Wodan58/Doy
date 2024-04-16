@@ -1,13 +1,13 @@
 /*
     module  : map.c
-    version : 1.8
-    date    : 10/02/23
+    version : 1.10
+    date    : 03/05/24
 */
 #ifndef MAP_C
 #define MAP_C
 
 /**
-OK 2790  map  :  DDA	A [P]  ->  B
+Q1  OK  2790  map  :  DDA  A [P]  ->  B
 Executes P on each member of aggregate A,
 collects results in sametype aggregate B.
 */
@@ -116,9 +116,6 @@ void map_(pEnv env)
 		node.u.num = i;
 		prime(env, node);
 	    }
-	break;
-
-    default:
 	break;
     }
 }

@@ -1,14 +1,14 @@
 /*
     module  : iffile.c
-    version : 1.7
-    date    : 10/02/23
+    version : 1.9
+    date    : 03/05/24
 */
 #ifndef IFFILE_C
 #define IFFILE_C
 
 /**
-OK 2680  iffile  :  DDDP	X [T] [E]  ->  ...
-If X is a file, executes T else executes E.
+Q2  OK  2680  iffile  :  DDDP  X [T] [E]  ->  ...
+[FOREIGN] If X is a file, executes T else executes E.
 */
 void iffile_(pEnv env)
 {

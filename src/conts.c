@@ -1,13 +1,13 @@
 /*
     module  : conts.c
-    version : 1.6
-    date    : 10/02/23
+    version : 1.8
+    date    : 03/05/24
 */
 #ifndef CONTS_C
 #define CONTS_C
 
 /**
-OK 1080  conts  :  ->  A	[[P] [Q] ..]
+Q0  OK  1080  conts  :  A  ->  [[P] [Q] ..]
 Pushes current continuations. Buggy, do not use.
 */
 void conts_(pEnv env)

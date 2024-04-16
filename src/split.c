@@ -1,13 +1,13 @@
 /*
     module  : split.c
-    version : 1.8
-    date    : 10/02/23
+    version : 1.10
+    date    : 03/05/24
 */
 #ifndef SPLIT_C
 #define SPLIT_C
 
 /**
-OK 2840  split  :  DDAA	A [B]  ->  A1 A2
+Q1  OK  2840  split  :  DDAA  A [B]  ->  A1 A2
 Uses test B to split aggregate A into sametype aggregates A1 and A2.
 */
 void split_(pEnv env)
@@ -134,9 +134,6 @@ void split_(pEnv env)
 		*/
 		prime(env, node);
 	    }
-	break;
-
-    default:
 	break;
     }
 }

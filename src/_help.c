@@ -1,14 +1,15 @@
 /*
     module  : _help.c
-    version : 1.6
-    date    : 10/02/23
+    version : 1.10
+    date    : 03/21/24
 */
 #ifndef _HELP_C
 #define _HELP_C
 
 /**
-OK 2910  _help  :  N	->
-Lists all hidden symbols in library and then all hidden builtin symbols.
+Q0  IGNORE_OK  2910  _help  :  N  ->
+[IMPURE] Lists all hidden symbols in library and then all hidden builtin
+symbols.
 */
 void _help_(pEnv env)
 {
@@ -17,9 +18,9 @@ void _help_(pEnv env)
 
     while (i) {
 	ent = vec_at(env->symtab, --i);
-	if (strchr("(_", ent.name[0])) {
+	if (strchr("#_", ent.name[0])) {
 	    name_length = strlen(ent.name) + 1;
-	    if (column + name_length > 72) {
+	    if (column + name_length > HELPLINEMAX) {
 		putchar('\n');
 		column = 0;
 	    }

@@ -1,16 +1,16 @@
 /*
     module  : dip.c
-    version : 1.7
-    date    : 10/02/23
+    version : 1.10
+    date    : 03/21/24
 */
 #ifndef DIP_C
 #define DIP_C
 
 /**
-OK 2430  dip  :  DDAP	X [P]  ->  ...  X
+Q1  OK  2430  dip  :  DDPA  X [P]  ->  ...  X
 Saves X, executes P, pushes X back.
 */
-PRIVATE void dip_(pEnv env)
+void dip_(pEnv env)
 {
     Node list, node;
 

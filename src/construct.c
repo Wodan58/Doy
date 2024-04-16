@@ -1,17 +1,17 @@
 /*
     module  : construct.c
-    version : 1.7
-    date    : 11/06/23
+    version : 1.9
+    date    : 03/21/24
 */
 #ifndef CONSTRUCT_C
 #define CONSTRUCT_C
 
 /**
-OK 2470  construct  :  DDP 	[P] [[P1] [P2] ..]  ->  R1 R2 ..
+Q2  OK  2470  construct  :  DDP  [P] [[P1] [P2] ..]  ->  R1 R2 ..
 Saves state of stack and then executes [P].
 Then executes each [Pi] to give Ri pushed onto saved stack.
 */
-PRIVATE void construct_(pEnv env)
+void construct_(pEnv env)
 {	/* [P] [[P1] [P2] ..] -> X1 X2 ..	*/
     int i, j;
     unsigned size1, size2;

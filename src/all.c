@@ -1,13 +1,13 @@
 /*
     module  : all.c
-    version : 1.9
-    date    : 10/02/23
+    version : 1.11
+    date    : 03/05/24
 */
 #ifndef ALL_C
 #define ALL_C
 
 /**
-OK 2860  all  :  DDA	A [B]  ->  X
+Q1  OK  2860  all  :  DDA  A [B]  ->  X
 Applies test B to members of aggregate A, X = true if all pass.
 */
 void all_(pEnv env)
@@ -105,9 +105,6 @@ void all_(pEnv env)
 		node.u.num = i;
 		prime(env, node);
 	    }
-	break;
-
-    default:
 	break;
     }
 }

@@ -1,13 +1,13 @@
 /*
     module  : primrec.c
-    version : 1.8
-    date    : 10/02/23
+    version : 1.10
+    date    : 03/05/24
 */
 #ifndef PRIMREC_C
 #define PRIMREC_C
 
 /**
-OK 2820  primrec  :  DDDA	X [I] [C]  ->  R
+Q2  OK  2820  primrec  :  DDDA  X [I] [C]  ->  R
 Executes I to obtain an initial value R0.
 For integer X uses increasing positive integers to X, combines by C for new R.
 For aggregate X uses successive members and combines by C for new R.
@@ -55,9 +55,6 @@ void primrec_(pEnv env)
 	    node.u.num = i;
 	    env->stck = pvec_add(env->stck, node);
 	}
-	break;
-
-    default:
 	break;
     }
     for (i = 0; i < k; i++)
