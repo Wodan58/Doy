@@ -1,21 +1,20 @@
 #
 #   module  : CMakeLists.txt
-#   version : 1.4
-#   date    : 05/07/24
+#   version : 1.5
+#   date    : 05/28/24
 #
 cmake_minimum_required(VERSION 3.5)
-project(Roy VERSION 1.0)
+project(Soy VERSION 1.0)
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
   set(CMAKE_BUILD_TYPE "Release")
 endif()
+add_executable(fib fib.c exeterm.c ersatz.c main.c writ.c prog.c save.c)
 add_definitions(-DLINK="\\"${CMAKE_EXE_LINKER_FLAGS}\\"")
 add_definitions(-DVERS="${CMAKE_BUILD_TYPE} ${PROJECT_VERSION}")
-add_executable(fib fib.c exeterm.c ersatz.c main.c writ.c prog.c save.c)
 #
 #	MSVC: cmake --build . --config Release
 #
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  add_definitions(-DGC_NOT_DLL -D_CRT_SECURE_NO_WARNINGS)
   set(CMAKE_VERBOSE_MAKEFILE ON)
   option(BUILD_SHARED_LIBS OFF)
   option(BUILD_TESTING OFF)
@@ -41,9 +40,14 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   option(without_libatomic_ops ON)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGC_NOT_DLL -D_CRT_SECURE_NO_DEPRECATE")
   add_definitions(-DCOMP="\\"${CMAKE_C_FLAGS}\\"")
-  target_link_libraries(fib bdwgc/Release/gc)
+  target_link_libraries(fib bdwgc/Release/gcmt-lib)
   include_directories(bdwgc/include)
   add_subdirectory(bdwgc)
+  add_dependencies(fib always)
+  add_custom_target(always 
+		    WORKING_DIRECTORY bdwgc
+		    COMMAND cmake .
+		    COMMAND cmake --build . --config Release)
 else()
   add_dependencies(fib always)
   add_custom_target(always
