@@ -73,6 +73,7 @@ void fgets_(pEnv env);
 void file_(pEnv env);
 void filetime_(pEnv env);
 void filter_(pEnv env);
+void finclude_(pEnv env);
 void first_(pEnv env);
 void fjump_(pEnv env);
 void float_(pEnv env);

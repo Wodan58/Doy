@@ -73,6 +73,7 @@
 #include "./src/file.c"
 #include "./src/filetime.c"
 #include "./src/filter.c"
+#include "./src/finclude.c"
 #include "./src/first.c"
 #include "./src/fjump.c"
 #include "./src/float.c"

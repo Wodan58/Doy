@@ -66,6 +66,9 @@
 #undef FPUSH_C
 #undef FPUSH_C
 #endif
+#ifndef FINCLUDE_C
+#undef GET_C			/* READ ALL FACTORS FROM FILE */
+#endif
 #ifndef FOLD_C
 #undef SWAPD_C
 #undef STEP_C

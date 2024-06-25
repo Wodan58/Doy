@@ -73,6 +73,7 @@
 #define FILE_C
 #define FILETIME_C
 #define FILTER_C
+#define FINCLUDE_C
 #define FIRST_C
 #define FJUMP_C
 #define FLOAT_C
