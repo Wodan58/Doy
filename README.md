@@ -1,5 +1,5 @@
 Soy
----
+===
 
 Build|Linux|Windows|Coverity
 ---|---|---|---
@@ -17,4 +17,9 @@ Build instructions
 Changes
 -------
 
-Some builtins are not supported because they have no business in compiled code.
+Some builtins are not supported.
+
+See also
+--------
+
+[Roy](https://github.com/Wodan58/Roy), compiled Moy with possible stack overflow.

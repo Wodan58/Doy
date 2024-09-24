@@ -108,9 +108,6 @@
 #undef PUSH_C
 #undef PUSH_C
 #endif
-#ifndef RECV_C
-#undef RECV_C		/* RESCHEDULE THIS INSTRUCTION */
-#endif
 #ifndef SOME_C
 #undef FALSE_C
 #undef STRUE_C
@@ -168,6 +165,6 @@
 #undef FJUMP_C
 #endif
 #undef BINREC_C
-#undef UNSTACK_C	/* THE STACK IS RESTORED WITH RESULT */
+#undef UNSTACK_C		/* THE STACK IS RESTORED WITH RESULT */
 #undef CONS_C
 #undef REST_C

@@ -1,20 +1,36 @@
 /*
  *  module  : exeterm.c
- *  version : 1.8
- *  date    : 04/13/24
+ *  version : 1.10
+ *  date    : 09/19/24
  */
 #include "globals.h"
+
+#ifdef TRACING
+static void my_trace(pEnv env, Node node, FILE *fp)
+{
+    if (!env->debugging)
+	return;
+    writestack(env, env->stck, fp);
+    fprintf(fp, " : ");
+    writefactor(env, node, fp);
+    fputc('\n', fp);
+    fflush(fp);
+}
+#endif
 
 /*
  * Execute program, as long as it is not empty.
  */
-void exeterm(pEnv env, NodeList *list)
+void exeterm(pEnv env, NodeList list)
 {
     Node node;
 
     prog(env, list);
-    while (pvec_cnt(env->prog)) {
-	env->prog = pvec_pop(env->prog, &node);
+    while (vec_size(env->prog)) {
+	node = vec_pop(env->prog);
+#ifdef TRACING
+	my_trace(env, node, stdout);
+#endif
 	switch (node.op) {
 	case USR_LIST_:
 	    prog(env, node.u.lis);
@@ -29,6 +45,6 @@ void exeterm(pEnv env, NodeList *list)
 	    node.op = ANON_FUNCT_;
 	    break;
 	}
-	env->stck = pvec_add(env->stck, node);
+	vec_push(env->stck, node);
     }
 }
