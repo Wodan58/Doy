@@ -165,6 +165,6 @@
 #undef FJUMP_C
 #endif
 #undef BINREC_C
-#undef UNSTACK_C		/* THE STACK IS RESTORED WITH RESULT */
+#undef UNSTACK_C
 #undef CONS_C
 #undef REST_C
