@@ -7,7 +7,7 @@
 
 void joy(pEnv env)
 {
-NULLARY(INTEGER_NEWNODE, 10);
+NULLARY(INTEGER_NEWNODE, 35);
 static Node L1[] = {
 { .u.proc=small_, .op=ANON_FUNCT_ },
 { .u.proc=dup_, .op=ANON_FUNCT_ },

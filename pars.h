@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARS_H_INCLUDED
-# define YY_YY_PARS_H_INCLUDED
+#ifndef YY_YY_C_PARS_H_INCLUDED
+# define YY_YY_C_PARS_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -123,4 +123,4 @@ extern YYLTYPE yylloc;
 int yyparse (pEnv env);
 
 
-#endif /* !YY_YY_PARS_H_INCLUDED  */
+#endif /* !YY_YY_C_PARS_H_INCLUDED  */
